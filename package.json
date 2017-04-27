@@ -1,22 +1,24 @@
 {
-  "name": "dongnaoalbum",
-  "version": "1.0.0",
-  "description": "fileupload,progress,preview",
+  "name": "dongnaoshop",
+  "version": "1.0.1",
+  "description": "Vip",
   "main": "app.js",
   "dependencies": {
-    "mongoose": "^4.7.1"
+    "express": "~3.4.8",
+    "express-session": "~1.9.3",
+    "body-parser": "~1.10.0",
+    "multer": "~0.1.6",
+    "path": "~0.4.9",
+    "mongoose": "~3.8.1",
+    "ejs": "~0.8.5"
   },
-  "devDependencies": {
-    "body-parser": "^1.15.2",
-    "ejs": "^2.5.3",
-    "express": "^4.14.0",
-    "express-session": "^1.14.2",
-    "mongoose": "^4.7.1",
-    "multer": "^1.2.0"
-  },
+  "devDependencies": {},
   "scripts": {
     "test": "node app.js"
   },
+  "keywords": [
+    "Song;dongnao;shop;"
+  ],
   "author": "Song",
   "license": "ISC"
 }
