@@ -1,11 +1,13 @@
+var fs = require('fs');
 var express = require('express');
-var app = express();
+// var multer = require('multer');
+var routes = require('./routes');
 var path = require('path');
 var mongoose = require("mongoose");
-
 var bodyParser = require('body-parser');
-var multer = require('multer');
 var session = require('express-session');
+
+var app = express();
 
 global.dbHelper = require( './common/dbHelper' );
 
@@ -29,10 +31,11 @@ app.engine( '.html', require( 'ejs' ).__express );
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(multer());
+// app.use(multer());
 
 // 设定静态文件目录，比如本地文件
 app.use(express.static(path.join(__dirname, 'public')));
+
 
 app.use(function(req, res, next){
     res.locals.user = req.session.user;
@@ -43,11 +46,9 @@ app.use(function(req, res, next){
 });
 
 
-require('./routes')(app);
+routes(app);
 
-app.get('/', function(req, res) {
-    res.redirect('/login');
-});
+
 
 app.listen(3000,function(){
   console.log('listen:3000');
