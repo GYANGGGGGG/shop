@@ -1,14 +1,18 @@
-module.exports = function ( app ) {
-    app.get('/login',function(req,res){
-      console.log('login');
+var express = require('express');
+var router = express.Router();
+
+var checkNotLogin = require('../middlewares/check').checkNotLogin;
+    router.get('/', checkNotLogin, function(req,res){
+      // console.log('login');
         res.render('login');
     });
 
-    app.post('/login', function (req, res) {
-      console.log(req.body);
+    router.post('/', function (req, res) {
+      // console.log(req.body);
         var User = global.dbHelper.getModel('user'),
             uname = req.body.uname;
         User.findOne({name: uname}, function (error, doc) {
+          // console.log(doc);
             if (error) {
                 res.send(500);
                 console.log(error);
@@ -27,4 +31,4 @@ module.exports = function ( app ) {
         });
     });
 
-}
+module.exports = router;

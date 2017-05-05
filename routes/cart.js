@@ -1,23 +1,17 @@
-module.exports = function ( app ) {
+var express = require('express');
+var router = express.Router();
+
+var checkLogin = require('../middlewares/check').checkLogin;
     //查看购物车商品
-    app.get('/cart', function(req, res) {
+    router.get('/', checkLogin, function(req, res) {
         var Cart = global.dbHelper.getModel('cart');
-        if(!req.session.user){
-            req.session.error = "用户已过期，请重新登录:"
-            res.redirect('/login');
-        }else{
             Cart.find({"uId":req.session.user._id,"cStatus":false}, function (error, docs) {
                 res.render('cart',{carts:docs});
             });
-        }
     });
     //添加购物车商品
-    app.get("/addToCart/:id", function(req, res) {
+    router.get("/add/:id", checkLogin, function(req, res) {
        //req.params.id 获取商品ID号
-        if(!req.session.user){
-            req.session.error = "用户已过期，请重新登录:"
-            res.redirect('/login');
-        }else{
             var Commodity = global.dbHelper.getModel('commodity'),
                 Cart = global.dbHelper.getModel('cart');
             Cart.findOne({"uId":req.session.user._id, "cId":req.params.id, "cStatus":false},function(error,doc){
@@ -31,12 +25,12 @@ module.exports = function ( app ) {
                     });
                 //商品未存在，添加
                 }else{
-                    Commodity.findOne({"_id": req.params.id}, function (error, doc) {
+                    Commodity.findOne({"cId": req.params.id,'imgIndex' : 0}, function (error, doc) {
                         if (doc) {
                             Cart.create({
                                 uId: req.session.user._id,
                                 cId: req.params.id,
-                                cName: doc.name,
+                                cName: doc.cname,
                                 cPrice: doc.price,
                                 cImgSrc: doc.imgSrc,
                                 cQuantity : 1
@@ -51,11 +45,11 @@ module.exports = function ( app ) {
                     });
                 }
             });
-        }
+
     });
 
     //删除购物车商品
-    app.get("/delFromCart/:id", function(req, res) {
+    router.get("/del/:id", function(req, res) {
         //req.params.id 获取商品ID号
         var Cart = global.dbHelper.getModel('cart');
         Cart.remove({"_id":req.params.id},function(error,doc){
@@ -67,7 +61,7 @@ module.exports = function ( app ) {
     });
 
     //购物车结算
-    app.post("/cart/clearing",function(req,res){
+    router.post("/clearing",function(req,res){
         var Cart = global.dbHelper.getModel('cart');
         Cart.update({"_id":req.body.cid},{$set : { cQuantity : req.body.cnum,cStatus:true }},function(error,doc){
             //更新成功返回1  失败返回0
@@ -78,4 +72,4 @@ module.exports = function ( app ) {
     });
 
 
-}
+module.exports = router;
