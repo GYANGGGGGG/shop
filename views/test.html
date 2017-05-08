@@ -1,0 +1,99 @@
+<html>
+<head>
+<meta charset="utf-8">
+<title>test</title>
+</head>
+<style>
+.upload-container {
+    background-image: url(../images/add.jpg);
+    background-repeat: no-repeat;
+    width: 180px;
+    height: 200px;
+    padding-bottom: 10px;
+    display: inline-block;
+    vertical-align: middle;
+    .fileupload {
+        opacity: 0;
+        filter: alpha(opacity=0);
+        width: 200px;
+        height: 200px;
+    }
+}
+</style>
+
+<script src="/javascripts/jquery.min.js" type="text/javascript"></script>
+
+<body>
+<div class="upload-container">
+    <input type="file" name="fileToUpload"  class="fileupload" />
+    <input type="file" name="fileToUpload"  class="fileupload" />
+
+</div>
+<div style="width:30px;height:30px;background-color:grey" id="go"></div>
+<div style="width:30px;height:30px;background-color:grey" id="go"></div>
+<script type="text/javascript">
+$(function(){
+
+  $('#go').click(function(){
+    // alert('yse');
+    $('.fileupload').each(function(){
+
+          if ($(this).val().length) {
+              var fileName = $(this).val();
+              var extension = fileName.substring(fileName.lastIndexOf('.'), fileName.length).toLowerCase();//获取扩展名
+              if (extension == ".jpg" || extension == ".png") {
+                      var data = new FormData();
+                      data.append('upload', $(this)[0].files[0]);
+
+
+                      console.log(data);
+                      $.ajax({
+                          url: 'test',
+                          type: 'POST',
+                          data: data,
+                          cache: false,
+                          contentType: false, //不可缺参数
+                          processData: false, //不可缺参数
+                          success: function(data) {
+                              console.log(data);
+                          },
+                          error: function() {
+                              console.log('error');
+                          }
+                      });
+              }
+          }
+    })
+  });
+  // $('.fileupload').change(function(event) {
+  //     /* Act on the event */
+  //     if ($('.fileupload').val().length) {
+  //         var fileName = $('.fileupload').val();
+  //         var extension = fileName.substring(fileName.lastIndexOf('.'), fileName.length).toLowerCase();//获取扩展名
+  //         if (extension == ".jpg" || extension == ".png") {
+  //                 var data = new FormData();
+  //                 data.append('upload', $('.fileupload')[0].files[0]);
+  //
+  //
+  //                 console.log(data);
+  //                 $.ajax({
+  //                     url: 'test',
+  //                     type: 'POST',
+  //                     data: data,
+  //                     cache: false,
+  //                     contentType: false, //不可缺参数
+  //                     processData: false, //不可缺参数
+  //                     success: function(data) {
+  //                         console.log(data);
+  //                     },
+  //                     error: function() {
+  //                         console.log('error');
+  //                     }
+  //                 });
+  //         }
+  //     }
+  // });
+})
+
+</script>
+</body>
