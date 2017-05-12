@@ -1,0 +1,56 @@
+#img-container {
+
+}
+#img-container:after {
+    content: '.';
+    display: block;
+    height: 0;
+    visibility: hidden;
+    overflow: hidden;
+    clear: both;
+}
+.img-item {
+    position: relative;
+    float: left;
+    margin-top: 13px;
+    margin-right: 16px;
+    margin-bottom: 0.1875rem;
+    height: 150px;
+    width: 150px;
+    box-sizing: border-box;
+}
+.img-thumb {
+    border: 1px solid #000;
+}
+.thumb-icon {
+    width: 100%;
+    height: 100%;
+}
+.img-up-add {
+    display: table;
+    border: 1px dashed #E0E0E0;
+}
+.img-add-icon {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+.img-remove {
+    position: absolute;
+    right: -8px;
+    top: -10px;
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #f7333d;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    /*font-size: 0.25rem;*/
+    overflow: hidden;
+    background-clip: padding-box;
+}
+#img-file-input {
+    display: none;
+}
