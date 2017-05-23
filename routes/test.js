@@ -38,7 +38,7 @@ router.post('/',checkLogin, function(req, res) {
         console.log('2');
     form.parse(req, function(err, fields, files) {
         // console.log(fields);
-console.log(fields);
+        // console.log(fields);
         if (err) {
             res.send(err);
             return;
@@ -103,8 +103,5 @@ console.log(fields);
         }
     });
 });
-
-
-
 
 module.exports = router;

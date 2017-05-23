@@ -10,7 +10,8 @@ module.exports = function (app) {
     app.use('/cart', require('./cart'));
     app.use('/commodity', require('./commodity'));
     app.use('/addcommodity', require('./addcommodity'));
-    app.use('/test', require('./test'));
+    app.use('/test2', require('./test2'));
     app.use('/sale', require('./sale'));
+    app.use('/shop', require('./shop'));
 
 };

@@ -6,9 +6,37 @@ var checkLogin = require('../middlewares/check').checkLogin;
     router.get('/', checkLogin, function (req, res) {
       // console.log(req.session);
           var Commodity = global.dbHelper.getModel('commodity');
-          Commodity.find({imgIndex:0}, function (error, docs) {
-              res.render('home',{Commoditys:docs});
+          var User = global.dbHelper.getModel('user');
+          var Cart = global.dbHelper.getModel('cart');
+
+          var commoditys = [];
+          var user = [];
+          var carts = [];
+          var id = req.session.user._id;
+          Commodity.find({} ,function (error, docs) {
+
+              for (var i = 0; i < 5; i++) {
+                  commoditys.push(docs.pop());
+              }
+            //   console.log(commoditys);
+
           });
+          User.find({"_id":id} ,function (error, doc) {
+
+                  user=doc;
+                //   console.log(user);
+
+                  Cart.find({"uId":req.session.user._id,"cStatus":false}, function (error, docs) {
+                      carts=docs;
+                      res.render('home',{User:user,Commoditys:commoditys,Carts:carts});
+
+                  });
+
+
+          });
+
+
+
     });
 
 module.exports = router;

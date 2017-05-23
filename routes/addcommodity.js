@@ -24,20 +24,19 @@ router.post('/',checkLogin, function(req, res) {
     form.encoding = 'utf-8'; //设置编辑
     form.uploadDir = userDirPath; //设置上传目录
     form.keepExtensions = true; //保留后缀
-    form.maxFieldsSize = 2 * 1024 * 1024; //文件大小
+    form.maxFieldsSize = 3 * 1024 * 1024; //文件大小
     form.type = true;
 
-    var displayUrl;
     // var files = [];
 
     // form.on('file', function(filed, file) {
     //     files.push([filed, file]);
     // }); //whenever a file is received, this will add the file info to the array
 
-    // console.log(files);
+    // console.log('1');
 
     form.parse(req, function(err, fields, files) {
-        // console.log(fields);
+        // console.log("2",files);
         // console.log(fields);
         if (err) {
             res.send(err);
@@ -73,32 +72,55 @@ router.post('/',checkLogin, function(req, res) {
             fs.renameSync(files.upload.path, newPath); //重命名
             // res.send(200);
             var Commodity = global.dbHelper.getModel('commodity');
-            console.log(req.session.user._id);
+            var CImg = global.dbHelper.getModel('cImg');
+
             var uId = req.session.user._id;
             var cId = fields.id;
             var cname = fields.cname;
             var price = fields.cprice;
+            var type = fields.type;
+            var cDescription = fields.cDescription;
             var imgSrc = userPath;
             var imgIndex = fields.imgIndex;
+            var cDate = new Date().toLocaleString( );
+
+
             var commodity = {
               uId: uId,
               cId: cId,
               cname: cname,
               price: price,
               imgSrc: imgSrc,
-              imgIndex :imgIndex
+              cDate :cDate,
+              type :type,
+              cDescription:cDescription,
             };
 
-            Commodity.create(commodity, function (error, doc) {
+            var cImg = {
+                cId: cId,
+                imgSrc: imgSrc,
+                imgIndex :imgIndex,
+            }
+            if(imgIndex==0){
+                Commodity.create(commodity, function (error, doc) {
+                    if (doc) {
+                        res.send(200);
+                        // res.redirect('./home');
+                    }else{
+                        res.send(error);
+                    }
+                });
+            }
+
+
+            CImg.create(cImg, function(error,doc){
                 if (doc) {
-                    // res.send(200);
+                    if(imgIndex!=0)
+                    res.send(200);
                     // res.redirect('./home');
                 }else{
                     res.send(error);
                 }
-
-
-
             });
 
 

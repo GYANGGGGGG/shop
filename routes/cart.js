@@ -1,4 +1,4 @@
-var express = require('express');
+    var express = require('express');
 var router = express.Router();
 
 var checkLogin = require('../middlewares/check').checkLogin;
@@ -10,7 +10,7 @@ var checkLogin = require('../middlewares/check').checkLogin;
             });
     });
     //添加购物车商品
-    router.get("/add/:id", checkLogin, function(req, res) {
+    router.post("/add/:id", checkLogin, function(req, res,next) {
        //req.params.id 获取商品ID号
             var Commodity = global.dbHelper.getModel('commodity'),
                 Cart = global.dbHelper.getModel('cart');
@@ -20,12 +20,14 @@ var checkLogin = require('../middlewares/check').checkLogin;
                     Cart.update({"uId":req.session.user._id, "cId":req.params.id},{$set : { cQuantity : doc.cQuantity + 1 }},function(error,doc){
                         //成功返回1  失败返回0
                         if(doc > 0){
-                            res.redirect('/home');
+                            // res.redirect('/home');
+                            res.send(200);
+                            // next();
                         }
                     });
                 //商品未存在，添加
                 }else{
-                    Commodity.findOne({"cId": req.params.id,'imgIndex' : 0}, function (error, doc) {
+                    Commodity.findOne({"cId": req.params.id}, function (error, doc) {
                         if (doc) {
                             Cart.create({
                                 uId: req.session.user._id,
@@ -36,7 +38,9 @@ var checkLogin = require('../middlewares/check').checkLogin;
                                 cQuantity : 1
                             },function(error,doc){
                                 if(doc){
-                                    res.redirect('/home');
+                                    // res.redirect('/home');
+                                    res.send('new');
+
                                 }
                             });
                         } else {
