@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ch">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>shop</title>
+
+    <!-- Google Fonts -->
+    <!-- <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,100' rel='stylesheet' type='text/css'> -->
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/owl.carousel.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+	<link rel="stylesheet" href="css/banner.css">
+  </head>
+  <body>
+
+  <% include components/header %>
+    <!-- End header area -->
+    <div class="mainmenu-area">
+        <div class="container">
+            <div class="row">
+
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="home">主页</a></li>
+                        <li><a href="shop">商品页</a></li>
+                        <li><a href="cart">购物车</a></li>
+                        <li><a href="addcommodity">发布商品</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End mainmenu area -->
+
+
+    <div class="banner-3d">
+		<ul>
+			<li>
+				<div class="mask-shadow-3d"></div>
+				<div class="bg-gradient"></div>
+				<div class="bg-phone"></div>
+				<div class="bg-headphones"></div>
+			</li>
+		</ul>
+	</div>
+     <!-- End slider area -->
+
+
+    <div class="maincontent-area">
+        <div class="zigzag-bottom"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="latest-product">
+                        <h2 class="section-title">最新商品</h2>
+                        <div class="product-carousel">
+                            <%for(var i in Commoditys){ if(!Commoditys[i])continue;%>
+                            <div class="single-product">
+                                <div class="product-f-image">
+                                    <img src="/images/<%=Commoditys[i].imgSrc%>" alt="">
+                                    <div class="product-hover">
+                                        <a onclick="addC(<%=Commoditys[i].cId%>)" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> 添加至购物车</a>
+                                        <a href="/commodity/single/<%=Commoditys[i].cId%>" class="view-details-link"><i class="fa fa-link"></i> 查看详情</a>
+                                    </div>
+                                </div>
+
+                                <h2><%=Commoditys[i].cname%></h2>
+
+                                <div class="product-carousel-price">
+                                    <ins>￥<%=Commoditys[i].price%></ins>
+                                </div>
+                            </div>
+                            <%}%>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End main content area -->
+
+
+<script type="text/javascript">
+
+    function addC(id){
+
+        $.ajax({
+            url:'/cart/add/'+id,
+            type:'post',
+            data:'data',
+            success:function(data,status){
+                alert('商品成功加入购物车!');
+                if(data=='new'){
+
+                    var $num = $('.shopping-item  .product-count');
+                    console.log($num.html());
+                    $num.html(Number($num.html())+1);//局部刷新更新购物车商品数量
+                }
+            },
+            error:function(data,status){
+
+            }
+        });
+
+    }
+</script>
+
+    <!-- Latest jQuery form server -->
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+
+    <!-- Bootstrap JS form CDN -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <!-- jQuery sticky menu -->
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.sticky.js"></script>
+
+    <!-- jQuery easing -->
+    <script src="js/jquery.easing.1.3.min.js"></script>
+
+    <!-- Main Script -->
+    <script src="js/main.js"></script>
+
+    <!-- Slider -->
+    <script type="text/javascript" src="js/bxslider.min.js"></script>
+	<script type="text/javascript" src="js/script.slider.js"></script>
+
+    <!-- banner -->
+    <script type="text/javascript" src="js/banner.js"></script>
+  </body>
+</html>

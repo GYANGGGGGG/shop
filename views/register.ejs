@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>用户注册</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="//cdn.bootcss.com/semantic-ui/2.1.8/semantic.min.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="stylesheets/tinyImgUpload.css">
+
+    <script src="/javascripts/jquery.min.js" type="text/javascript"></script>
+    <script src="javascripts/tinyImgUpload.js"></script>
+
+
+</head>
+
+<body>
+    <div class="ui grid">
+        <div class="four wide column"></div>
+        <div class="eight wide column">
+            <form class="ui form segment" method="post" enctype="multipart/form-data">
+                <div class="field required">
+                    <label>用户名</label>
+                    <input placeholder="用户名" type="text" name="name" id="name">
+                </div>
+                <div class="field required">
+                    <label>密码</label>
+                    <input placeholder="密码" type="password" name="password" id="password">
+                </div>
+                <div class="field required">
+                    <label>重复密码</label>
+                    <input placeholder="重复密码" type="password" name="repassword" id="repassword">
+                </div>
+                <div class="field required">
+                    <label>性别</label>
+                    <select class="ui compact selection dropdown" name="gender" id="gender">
+              <option value="m">男</option>
+              <option value="f">女</option>
+              <option value="x">保密</option>
+            </select>
+                </div>
+                <div class="field required">
+                    <label>头像</label>
+                    <div id="upload"></div>
+                </div>
+                <div class="field required">
+                    <label>个人简介</label>
+                    <textarea name="bio" rows="5" v-model="user.bio" id="bio"></textarea>
+                </div>
+                <input type="button" class="ui button fluid" value="注册" onclick="register()">
+                <br>
+                <a href="login"><input type="button" class="ui button fluid" value="已有帐号"></a>
+        </div>
+        </form>
+    </div>
+
+    <script type="text/javascript">
+
+    var options = {
+        path: 'register',
+        imgNum: 1,//最多可上传图片数量
+        onSuccess: function (res) {
+            window.location.href="home";
+        },
+        onFailure: function (res) {
+            alert('用户名已注册');
+        }
+    }
+
+    var formData = new FormData();
+    var upload = tinyImgUpload('#upload', options,formData);
+
+    function upload1(callback){
+        var name = $('#name').val(),
+            password = $('#password').val(),
+            gender = $('#gender').val(),
+            bio = $('#bio').val();
+
+        formData.append('name', name);
+        formData.append('password', password);
+        formData.append('gender', gender);
+        formData.append('bio', bio);
+
+        upload();
+        callback();
+    }
+        function register() {
+
+            upload1(function(){
+                    // window.location.href="home";
+            })
+        }
+    </script>
+
+</body>
+
+</html>
