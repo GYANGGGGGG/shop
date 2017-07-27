@@ -26,8 +26,8 @@ app.set('views', path.join(__dirname, 'views'));
 
 // 设定view engine变量，意为网页模板引擎
 //app.set('view engine', 'ejs');
-app.set( 'view engine', 'html' );
-app.engine( '.html', require( 'ejs' ).__express );
+app.set('view engine', 'ejs');
+// app.engine( '.html', require( 'ejs' ).__express );
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

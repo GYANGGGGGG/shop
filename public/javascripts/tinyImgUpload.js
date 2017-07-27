@@ -11,7 +11,7 @@
  * tinyImgUpload('div', options)
  */
 
-function tinyImgUpload(ele, options) {
+function tinyImgUpload(ele, options,formData) {
     // 判断容器元素合理性并且添加基础元素
     var eleList = document.querySelectorAll(ele);
     if(eleList.length == 0){
@@ -121,17 +121,12 @@ function tinyImgUpload(ele, options) {
     function uploadImg() {
         // console.log(ele.files);
 
-        var formData = new FormData();
+        // var formData = new FormData();
 
-        // console.log($("input[name='cname']").val());
-
-
-        formData.append('cname', $("input[name='cname']").val());
-        formData.append('cprice', $("input[name='cprice']").val());
-        formData.append('id', Date.now());
         for(var i=0, f; f=ele.files[i]; i++){//遍历文件
             formData.append('upload', f);//压入
             formData.append('imgIndex', i);
+
 
             $.ajax({        //使用Ajax进行数据传送
                 url: options.path,
@@ -141,12 +136,8 @@ function tinyImgUpload(ele, options) {
                 async:false, //异步ajax进行处理
                 contentType: false, //不可缺参数
                 processData: false, //不可缺参数
-                success: function(data) {
-                    console.log(data);
-                },
-                error: function() {
-                    console.log('error');
-                }
+                success: options.onSuccess,
+                error: options.onFailure
             });
 
             formData.delete('upload', f);//删除文件 避免重复上传

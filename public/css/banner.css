@@ -1,0 +1,98 @@
+/* reset */
+
+body,
+ul,
+li {
+    margin: 0;
+    padding: 0;
+}
+
+ul,
+li {
+    list-style: none;
+}
+
+.banner-3d {
+    margin: 55px auto;
+    margin-bottom: 0px;
+    width: 1120px;
+    height: 460px;
+
+    -webkit-perspective: 3000px;
+            perspective: 3000px;
+    /* 整个盒子透视基点 */
+}
+
+.banner-3d ul {
+    width: 100%;
+    height: 100%;
+
+    -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+    /* 子元素将保留其 3D 位置 */
+}
+
+.banner-3d ul li {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    -webkit-transition: -webkit-transform .3s cubic-bezier(.25, .46, .45, .94);
+            transition:         transform .3s cubic-bezier(.25, .46, .45, .94);
+    /* cubic-bezier(x1, y1, x2, y2) */
+}
+
+.banner-3d ul li .mask-shadow-3d {
+    position: absolute;
+    top: -72px;
+    right: -88px;
+    bottom: -72px;
+    left: -88px;
+    z-index: -999;
+
+    background: url(../img/banner-3d-shadow_f57b58cf6c.png) no-repeat;
+
+    opacity: 0;
+
+    transition: opacity .2s ease-in-out, transform .3s ease-in-out;
+    /* 规定以慢速开始和结束的过渡效果 */
+}
+
+.banner-3d ul li .bg-gradient {
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+
+    background: url(../img/banner-3d-item-0801-box-1_f316fbf768.png) no-repeat;
+    background-size: contain;
+    /* 按比例缩放 */
+}
+
+.banner-3d ul li .bg-phone,
+.banner-3d ul li .bg-headphones {
+    position: absolute;
+    /* top: -10%;
+    left: 0;
+
+    width: 100%;
+    height: 115%;  */
+    top: -72px;
+    right: 0;
+    bottom: -25px;
+    left: 0;
+
+    -webkit-transition: -webkit-transform .3s cubic-bezier(.25, .46, .45, .94);
+            transition:         transform .3s cubic-bezier(.25, .46, .45, .94);
+}
+
+.banner-3d ul li .bg-phone {
+    background: url(../img/banner-3d-item-0801-box-2_21f710baff.png) no-repeat;
+    background-size: 100% 100%;
+}
+
+.banner-3d ul li .bg-headphones {
+    background: url(../img/banner-3d-item-0801-box-3_9cd7ab1550.png) no-repeat;
+    background-size: 100% 100%;
+}
